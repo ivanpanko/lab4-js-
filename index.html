@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ElectroHub — Онлайн-магазин</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #eef2f5;
+      color: #333;
+      padding: 24px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #ffffff;
+      padding: 16px 28px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .main-nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .main-nav a:hover {
+      color: #38bdf8;
+    }
+
+    .section-title {
+      margin: 32px 0 16px 0;
+      font-size: 24px;
+      color: #0f172a;
+    }
+
+    .goods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 12px;
+      flex-grow: 1;
+    }
+
+    .product-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #059669;
+      margin-top: auto;
+      margin-bottom: 14px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 10px 0;
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .buy-btn:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="brand-title">ElectroHub</div>
+    <nav class="main-nav">
+      <a href="#">Каталог</a>
+      <a href="#">Акції</a>
+      <a href="#">Про нас</a>
+      <a href="#">Кошик</a>
+    </nav>
+  </header>
+
+  <h1 class="section-title">Популярні товари</h1>
+
+  <div id="goodsGrid" class="goods-grid"></div>
+
+  <script>
+    const goodsData = [
+      {
+        id: 101,
+        title: "Бездротові навушники",
+        cost: 2499,
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"
+      },
+      {
+        id: 102,
+        title: "Смарт-годинник",
+        cost: 4100,
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500"
+      },
+      {
+        id: 103,
+        title: "Ігрова миша",
+        cost: 1250,
+        image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500"
+      },
+      {
+        id: 104,
+        title: "Механічна клавіатура",
+        cost: 3100,
+        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500"
+      },
+      {
+        id: 105,
+        title: "Портативна колонка",
+        cost: 1850,
+        image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500"
+      },
+      {
+        id: 106,
+        title: "Графічний планшет",
+        cost: 6400,
+        image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=500"
+      },
+      {
+        id: 107,
+        title: "Веб-камера Full HD",
+        cost: 1900,
+        image: "https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=500"
+      },
+      {
+        id: 108,
+        title: "Зовнішній накопичувач SSD",
+        cost: 3800,
+        image: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500"
+      }
+    ];
+
+    const gridContainer = document.getElementById("goodsGrid");
+
+    gridContainer.innerHTML = goodsData.map(item => `
+      <article class="product-card">
+        <img class="product-image" src="${item.image}" alt="${item.title}">
+        <div class="product-info">
+          <h2 class="product-name">${item.title}</h2>
+          <div class="product-price">${item.cost.toLocaleString('uk-UA')} ₴</div>
+        </div>
+        <button class="buy-btn" onclick="addToCart('${item.title}')">Додати в кошик</button>
+      </article>
+    `).join("");
+
+    function addToCart(title) {
+      alert(`Товар "${title}" успішно додано до вашого кошика!`);
+    }
+  </script>
+</body>
+</html>
